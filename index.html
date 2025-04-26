@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modern Accordion</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;
+      padding: 2rem;
+    }
+
+    .accordion {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .faq-item {
+      background: white;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .faq-item:hover {
+      transform: scale(1.01);
+    }
+
+    .faq-que {
+      padding: 1rem 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.3s;
+    }
+
+    .faq-item.active .faq-que {
+      background: #e0f7ff;
+    }
+
+    .faq-que::after {
+      content: '▶';
+      font-size: 1.2rem;
+      position: absolute;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: transform 0.3s;
+    }
+
+    .faq-item.active .faq-que::after {
+      transform: translateY(-50%) rotate(90deg);
+    }
+
+    .faq-ans {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 1.5rem;
+      background: #fafafa;
+      color: #444;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+    }
+
+    .faq-item.active .faq-ans {
+      padding: 1rem 1.5rem;
+      max-height: 500px;
+    }
+  </style>
+</head>
+<body>
+  <div class="accordion">
+    <div class="faq-item">
+      <div class="faq-que">What is HTML?</div>
+      <div class="faq-ans">HTML stands for HyperText Markup Language.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-que">What is CSS?</div>
+      <div class="faq-ans">CSS is used for styling HTML documents.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-que">What is JavaScript?</div>
+      <div class="faq-ans">JavaScript is a scripting language for the web.</div>
+    </div>
+  </div>
+
+  <script>
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const que = item.querySelector('.faq-que');
+      const ans = item.querySelector('.faq-ans');
+
+      que.addEventListener('click', () => {
+        faqItems.forEach(i => {
+          const a = i.querySelector('.faq-ans');
+          if (i !== item) {
+            i.classList.remove('active');
+            a.style.maxHeight = null;
+          }
+        });
+
+        item.classList.toggle('active');
+        if (item.classList.contains('active')) {
+          ans.style.maxHeight = ans.scrollHeight + 'px';
+        } else {
+          ans.style.maxHeight = null;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
